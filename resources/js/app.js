@@ -17,6 +17,8 @@ window.Vue = require('vue');
 
 Vue.component('task-list', require('./components/TaskList.vue'));
 
+Vue.component('chat-room', require('./components/ChatRoom.vue'));
+
 const app = new Vue({
     el: '#app',
     data(){

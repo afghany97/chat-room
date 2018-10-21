@@ -12,8 +12,10 @@
 */
 
 use App\Events\FamilyCreated;
+use App\Events\NewMessage;
 use App\Events\TaskCreated;
 use App\Family;
+use App\Message;
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,4 +57,25 @@ Route::get('tasks/{family}',function (Family $family){
 Route::get('families/{family}',function (Family $family){
 
     return view('families',compact('family'));
+});
+
+Route::get('messages',function (){
+
+   return Message::all()->load('user');
+
+});
+
+Route::post('messages',function (){
+
+    $message = Message::create(request(['body','user_id']));
+
+    NewMessage::dispatch($message->load('user'));
+
+    return $message->load('user');
+});
+
+Route::delete('messages',function (){
+
+    Message::truncate();
+
 });
