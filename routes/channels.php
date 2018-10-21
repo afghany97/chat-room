@@ -11,6 +11,10 @@
 |
 */
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+use App\Family;
+
+Broadcast::channel('tasks.{family}', function ($user, Family $family) {
+
+    return in_array($user->id,$family->allows()->pluck('user_id')->toArray());
+
 });
